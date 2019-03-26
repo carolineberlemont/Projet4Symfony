@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'titleWelcomeLouvre'|trans }}{% endblock %}
+
+
+
+{% block body %}
+<div class="background">
+    </br>
+        <div class="container pb-2 pr-2 pl-2">
+        </br>
+            <h1 class="text-center">{{ 'titleWelcomeLouvre'|trans }}</h1>
+            <hr> 
+          
+            <p class="hometext">{{ "descriptionMuseum1"|trans |raw }}</p>
+
+            <p class="hometext">{{ "descriptionMuseum2"|trans }}</p>
+            </br>
+            <div class="container text-center">
+                <a href="{{path('booking') }}" class="btn blue">{{"wordTicketing"|trans}}</a>
+            </div>
+        </br>
+        </br>
+        </div>
+</div>
+
+{% endblock %}

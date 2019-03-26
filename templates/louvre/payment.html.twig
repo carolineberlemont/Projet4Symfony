@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{{ asset('css/mycss.css')}}">
+  <title>Payment</title>
+</head>
+<body>
+<script src="https://js.stripe.com/v3/"></script>
+
+<div class="container background-payment">
+  <h1>PAIEMENT DE VOTRE COMMANDE</h1>
+  {% for label, messages in app.flashes %}
+            <div class="container">
+            </br>
+                <div class="alert black alert-{{ label }}">
+                    {%  for message in messages %}
+                        <p>{{ message | raw }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+<div class="container forpayment">
+  <p>Le total de de votre commande s'élève à {{p}} euros. Vous pouvez procéder au paiement ci-dessous </p>
+  </br>
+  <form action="/charge" method="post" id="payment-form">
+    <div class="form-row">
+      <label for="card-element">
+        Renseignez les éléments de votre carte de crédit/débit :
+      </label> 
+      </br>     
+      </br>
+      <div id="card-element">
+        <!-- A Stripe Element will be inserted here. -->
+      </div>
+      </br>
+      <!-- Used to display form errors. -->
+      <div id="card-errors" role="alert"></div>
+    </div>
+    <button>Valider votre paiement</button>
+  </form>
+  </br>
+  <div class="container">
+      <a href="{{path('booking') }}" class="btn blue">Annuler la commande</a>
+  </div>
+</div>
+</div>
+
+<script>
+// Create a Stripe client.
+var stripe = Stripe('pk_test_hYdr1XXf4qr3WF8cqhEHaT1I');
+ 
+// Create an instance of Elements.
+var elements = stripe.elements();
+
+// Custom styling can be passed to options when creating an Element.
+// (Note that this demo uses a wider set of styles than the guide below.)
+var style = {
+  base: {
+    color: '#32325d',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#aab7c4'
+    }
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#fa755a'
+  }
+};
+ 
+// Create an instance of the card Element.
+var card = elements.create('card', {style: style});
+ 
+// Add an instance of the card Element into the `card-element` <div>.
+card.mount('#card-element');
+
+// Handle real-time validation errors from the card Element.
+card.addEventListener('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
+
+// Handle form submission.
+var form = document.getElementById('payment-form');
+// on place une écoute (addEventListener) sur
+// le form et l'action submit du form
+// écoute = listenner = surveiller un évènement sur un objet du dom
+// ex: un clic de la souris, un clic sur le clavier ou le submit d'un form
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+ console.log('hello');
+  stripe.createToken(card).then(function(result) {
+    if (result.error) {
+      console.log('error');
+      // Inform the user if there was an error.
+      var errorElement = document.getElementById('card-errors');
+      console.log(result.error);
+      errorElement.textContent = result.error.message;
+    } else {
+
+      console.log('ok');
+      // Send the token to your server.
+      stripeTokenHandler(result.token);
+    }
+  });
+});
+ 
+// Submit the form with the token ID.
+function stripeTokenHandler(token) {
+  // Insert the token ID into the form so it gets submitted to the server
+  var form = document.getElementById('payment-form');
+  var hiddenInput = document.createElement('input');
+  hiddenInput.setAttribute('type', 'hidden');
+  hiddenInput.setAttribute('name', 'stripeToken');
+  hiddenInput.setAttribute('value', token.id);
+  form.appendChild(hiddenInput);
+ 
+  // Submit the form
+  form.submit();
+        }
+</script>
+  
+</body>
+</html>

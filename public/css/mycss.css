@@ -1,0 +1,110 @@
+a {
+    color: #1D8A99;
+    text-shadow: 1px 1px 1px white
+}
+
+body {
+    color: white;
+}
+
+h1 {
+    color: #1D8A99;
+    text-shadow: 2px 2px 2px white
+}
+
+h2, h3, h4 {
+    color: white;
+    text-transform: none;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 10;
+    border-top: 1px solid white;
+}
+
+.background {
+    background-image: url('../image/pyramide2.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.background-payment {
+    background-color: #343a40;
+    padding: 4rem;
+    text-align: center;
+}
+
+.black {
+    color: white;
+    font-weight:bold;
+    text-align:center;
+    background-color: #CE3333;
+}
+
+.blue {
+    background-color: #1D8A99;
+    color: white;
+}
+
+.blockticket {
+    background-color: #1D8A99;
+}
+
+.btn {
+    text-shadow: 0px 0px 0px;
+}
+
+.col-form-label {
+    display: none;
+}
+
+.container1 {
+    background-color: #343a40;
+    }
+
+.form-control {
+    background-color: #eceeef
+}
+.hometext {
+    color: white;
+}
+
+.jumbotron {
+    color: #343a40;
+    background-color: #1D8A99!important;
+}
+
+/**
+ * The CSS shown here will not be introduced in the Quickstart guide, but shows
+ * how you can use CSS to style your Element's container.
+ */
+ .forpayment {
+    background-color: #1D8A99;
+    margin-top: 4rem;
+    padding: 2rem;
+    text-align: left;
+ }
+ .StripeElement {
+    background-color: white;
+    height: 40px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+  }
+  
+  .StripeElement--focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+  }
+  
+  .StripeElement--invalid {
+    border-color: #fa755a;
+  }
+  
+  .StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;
+  }

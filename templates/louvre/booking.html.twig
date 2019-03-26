@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %}{{"booking"|trans}}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('pickadate/themes/default.css')}}">
+<link rel="stylesheet" href="{{ asset('pickadate/themes/default.date.css')}}">
+{% endblock %}
+
+{% block body %}  
+</br>
+    <div class="container container1">
+        </br>
+        <h1 class="text-center">{{"booking"|trans}}</h1>
+        <hr>
+
+        {{ form_start(formBooking) }}
+            <div class="row">
+            <div class="col">{{ form_row(formBooking.email) }}</div>
+            <div class="col">{{ form_row(formBooking.visitdate) }}</div>           
+            </div>
+            <hr>
+            <h3>{{"buy"|trans}}</h3>
+            <hr>
+            <div class="jumbotron">
+                <ul class="tickets" data-prototype="{{ form_widget(formBooking.tickets.vars.prototype)|e('html_attr') }}">
+                    {{ form_row(formBooking.tickets)}}
+                </ul>
+            </div>
+            <div class="container text-center">
+                <button type="submit" class="btn btn-secondary">{{"endBooking"|trans}}</button>
+            </div>
+        {{ form_end(formBooking) }}
+        </br>
+        </br>
+        <div id="container"></div>
+    </div>   
+
+    {% endblock %} 
+
+    {% block javascripts %}    
+
+    <script type="text/javascript">
+        
+    var $collectionHolder;
+    var $addTicketButton = $('<button type="button" class="add_ticket_link">Ajouter un billet</button>');
+    
+    jQuery(document).ready(function() {
+        $collectionHolder = $('ul.tickets');
+        $collectionHolder.append($addTicketButton);
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+        $addTicketButton.on('click', function(e)
+        {
+            addTicketForm($collectionHolder, $addTicketButton);
+        });
+    });
+    function addTicketForm($collectionHolder, $addTicketButton) {
+        var prototype = $collectionHolder.data('prototype');
+        var index = $collectionHolder.data('index');
+        var newForm = prototype;
+        newForm = newForm.replace(/__name__label__/g, index);
+        newForm = newForm.replace(/__name__/g, index);
+        $collectionHolder.data('index', index + 1);
+        var $newFormLi = $('<li></li>').append(newForm);
+        $addTicketButton.before($newFormLi);
+        addTicketFormDeleteLink($newFormLi);
+        createpickadate();
+    }
+
+    function addTicketFormDeleteLink($tagFormLi) {
+        var $removeFormButton = $('<button type="button">Supprimer ce billet</button>');
+        $tagFormLi.append($removeFormButton);
+        $removeFormButton.on('click', function(e) {
+            $tagFormLi.remove();
+        });   
+    
+    }
+    var $input = $( '.js-pickadate-booking' ).pickadate({
+            formatSubmit: 'yyyy-mm-dd',
+            hiddenName: true,
+            container: '#container',
+            selectMonths: true,
+            selectYears: 2,
+            firstDay: 1,
+            min: Date.now(),
+            disable: [2, 7, [2019,4,1], [2019,10,1],[2019,11,25], [2020,4,1], [2020,10,1],[2020,11,25], [2021,4,1], [2021,10,1],[2021,11,25], [2022,4,1], [2022,10,1],[2022,11,25] ], 
+            monthsFull: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            weekdaysShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+            today: 'Aujourd\'hui',
+            clear: 'Effacer',
+            close: 'Fermer',            
+        });
+
+        function createpickadate() {
+           $( '.js-pickadate-ticket' ).pickadate({
+            formatSubmit: 'yyyy-mm-dd',
+            hiddenName: true,
+            container: '#container',
+            labelMonthNext: 'Go to the next month',
+            labelMonthPrev: 'Go to the previous month',
+            labelMonthSelect: 'Pick a month from the dropdown',
+            labelYearSelect: 'Pick a year from the dropdown',
+            selectMonths: true,
+            selectYears: 120,
+            firstDay: 1,
+            max: true,
+            monthsFull: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            weekdaysShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+            today: 'Aujourd\'hui',
+            clear: 'Effacer',
+            close: 'Fermer',
+        });  
+        }   
+        createpickadate();    
+
+        //var picker1 = $input1.pickadate('picker')
+
+    </script>
+{% endblock %}
+

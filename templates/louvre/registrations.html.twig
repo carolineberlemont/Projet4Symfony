@@ -1,0 +1,12 @@
+
+<img src="{{ img }}" width="300" border="0" alt="logo_du_louvre">
+
+<h3>Bienvenue au Musée du louvre!</h3>
+
+Votre réservation n° {{ number }} pour la date du {{ date }} a bien été prise en compte.
+Le montant total de votre commande s'élève à {{ price }} euros.
+
+Vous êtes attendus pour la visite avec les personnes suivantes : 
+    {% for ticket in tickets %}
+           <li> Mr/Mme {{ ticket.name }} {{ ticket.firstname }} </li>        
+    {% endfor %}

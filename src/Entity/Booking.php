@@ -28,7 +28,7 @@ class Booking
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Votre date de visite doit être renseigné")
-     * @Assert\Date
+     * @Assert\Date()
      */
     private $visitdate;
 

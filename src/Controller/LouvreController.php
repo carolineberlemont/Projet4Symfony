@@ -81,7 +81,7 @@ class LouvreController extends AbstractController
     /**
      * @Route("/charge", name="charge")
      */
-    public function charge(\Swift_Mailer $mailer, BookingRepository $repo, TicketRepository $repoticket, ServiceStripe $serviceStripe)
+    public function charge(\Swift_Mailer $mailer, BookingRepository $repo, TicketRepository $repoticket, ServiceStripe $serviceStripe, ServiceMailer $serviceMailer)
     {
             $lastbooking = $repo->findBy([], ['id' => 'desc'],1,0);
                 $price = $lastbooking[0]->getTotalprice(); 
@@ -89,30 +89,13 @@ class LouvreController extends AbstractController
                 $email = $lastbooking[0]->getEmail();   
                 $date = $lastbooking[0]->getVisitDate();
                 $date = $date->format('d/m/Y'); 
-                $id = $lastbooking[0]->getId();
+                $id = $lastbooking[0]->getId();                                 
            
             $result = $serviceStripe->payment($price, $number);
 
             if ($result == 'success') {
-                $message = (new \Swift_Message())
-                ->setSubject('Votre paiement pour le musée du Louvre')
-                ->setFrom('nesousx.website@gmail.com')
-                ->setTo($email);
-                $img = $message->embed(\Swift_Image::fromPath('../public/image/logo.jpg'));
-                $message ->setBody(
-                    $this->renderView(
-                        'louvre/registrations.html.twig', [
-                                'date' => $date, 
-                                'price' => $price, 
-                                'number' => $number, 
-                                'tickets' => $repoticket->findBy(['id' => $id]),
-                                'img' => $img
-                                ]
-                        ),
-                    'text/html'
-                );
-                $mailer->send($message); 
 
+                $email = $serviceMailer->userConfirmation($email, $number, $date, $price, $repoticket, $id);
                 return $this->render('louvre/charge.html.twig');             
             }
 

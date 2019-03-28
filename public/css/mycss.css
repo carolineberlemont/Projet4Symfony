@@ -25,6 +25,7 @@ hr {
 }
 
 .background {
+    min-height: 100vh; 
     background-image: url('../image/pyramide2.jpg');
     background-attachment: fixed;
     background-size: cover;
@@ -74,6 +75,10 @@ hr {
 .jumbotron {
     color: #343a40;
     background-color: #1D8A99!important;
+}
+
+.navbar-toggler{
+    color: #1D8A99!important;
 }
 
 /**

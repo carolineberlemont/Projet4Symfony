@@ -13,7 +13,7 @@ class TicketTest extends TestCase
 
       $testt->setName('Dupont');
       $testt->setFirstname('Julio');
-      $testt->setBirthdate('25/05/1982');
+      $testt->setBirthdate(2019-03-29);
       $testt->setCountry('BE');
       $testt->setReducedprice(false);
       $testt->setTicketprice(false);
@@ -21,7 +21,7 @@ class TicketTest extends TestCase
 
       $this->assertEquals('Dupont', $testt->getName());
       $this->assertEquals('Julio', $testt->getFirstname());
-      $this->assertEquals('25/05/1982', $testt->getBirthdate());
+      $this->assertEquals(2019-03-29, $testt->getBirthdate());
       $this->assertEquals('BE', $testt->getCountry());
       $this->assertFalse('', $testt->getReducedprice());
       $this->assertFalse('', $testt->getTicketprice());

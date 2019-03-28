@@ -13,18 +13,16 @@ class TicketTest extends TestCase
 
       $testt->setName('Dupont');
       $testt->setFirstname('Julio');
-      $testt->setBirthdate(2019-03-29);
+      $testt->setBirthdate(new \DateTime('29-03-2019'));
       $testt->setCountry('BE');
       $testt->setReducedprice(false);
       $testt->setTicketprice(false);
-      $testt->setBooking('22');
 
       $this->assertEquals('Dupont', $testt->getName());
       $this->assertEquals('Julio', $testt->getFirstname());
-      $this->assertEquals(2019-03-29, $testt->getBirthdate());
+      $this->assertEquals((new \DateTime('29-03-2019')), $testt->getBirthdate());
       $this->assertEquals('BE', $testt->getCountry());
       $this->assertFalse('', $testt->getReducedprice());
       $this->assertFalse('', $testt->getTicketprice());
-      $this->assertEquals('22', $testt->getBooking());
    }       
 }

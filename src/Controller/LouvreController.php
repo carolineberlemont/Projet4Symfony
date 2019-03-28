@@ -50,7 +50,7 @@ class LouvreController extends AbstractController
             $date = $booking->getVisitdate();            
             $r = $entitymanager->getRepository(Booking::class)->countByDay($date);
             
-            if($r > 999) {
+            if($r > 4) {
                 $this->addFlash(
                     'danger',
                     $message = "Plus de 1000 tickets ont deja été réservés pour ce jour. Merci de choisir une autre date de visite"

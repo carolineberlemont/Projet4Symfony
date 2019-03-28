@@ -7,7 +7,13 @@ use PHPUnit\Framework\TestCase;
 
 class BookingTest extends TestCase 
 {
-   public function testOfBooking()
+     public function testVisitDateIsInstanceOfDateTime()
+     {
+          $testb = new Booking;
+          $this->assertInstanceOf(\DateTime::class, $testb->getVisitdate());
+     }
+   
+     public function testOfBooking()
    {
         $testb = new Booking;
 
@@ -20,12 +26,6 @@ class BookingTest extends TestCase
         $this->assertEquals('emailtest@phpunit.fr', $testb->getEmail());
         $this->assertEquals('2019-05-25', $testb->getVisitdate());
         $this->assertEquals('32', $testb->getTotalprice());
-   }
-
-   public function testVisitDateIsInstanceOfDateTime()
-   {
-        $testb = new Booking;
-        $this->assertInstanceOf(\DateTime::class, $testb->getVisitdate());
    }
 
    public function testIdBookingBigger0()
